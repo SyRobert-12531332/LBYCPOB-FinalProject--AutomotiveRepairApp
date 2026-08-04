@@ -7,7 +7,7 @@ TEAM MEMBERS:
 
 <Jagonap, Angelo Mikhail M.> - hailm1k
 
-<Sy, Robert Vinzon C.> - 12531332
+<Sy, Robert Vinzon C.> - SyRobert-12531332
 
 
 PROBLEM STATEMENT & GOALS:
