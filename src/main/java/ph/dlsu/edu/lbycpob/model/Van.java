@@ -3,7 +3,7 @@ package ph.dlsu.edu.lbycpob.model;
 import java.util.List;
 
 /** INHERITANCE + POLYMORPHISM: Van-specific parts list. */
-public class Van extends repairapp.model.Vehicle {
+public class Van extends Vehicle {
 
     public Van(String brand, String model, String plateNumber, String ownerName, String contactNumber) {
         super(brand, model, plateNumber, ownerName, contactNumber);

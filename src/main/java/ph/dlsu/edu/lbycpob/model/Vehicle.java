@@ -1,4 +1,4 @@
-package repairapp.model;
+package ph.dlsu.edu.lbycpob.model;
 
 import java.util.List;
 
