@@ -1,4 +1,5 @@
 package ph.dlsu.edu.lbycpob.model;
+
 /**
  * ENCAPSULATION: passwordHash is never exposed as plain text once stored;
  * UserService is the only class allowed to compute or compare hashes.
