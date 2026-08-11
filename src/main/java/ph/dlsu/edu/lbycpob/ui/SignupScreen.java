@@ -1,4 +1,4 @@
 package ph.dlsu.edu.lbycpob.ui;
 
-public class LoginFrame {
+public class SignupScreen {
 }
