@@ -1,7 +1,7 @@
 package ph.dlsu.edu.lbycpob.ui;
 
-import com.autoworks.repair.AutomationRepairApp;
-import com.autoworks.repair.util.UIUtil;
+import ph.dlsu.edu.lbycpob.AutomationRepairApp;
+import ph.dlsu.edu.lbycpob.util.UIUtil;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
