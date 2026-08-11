@@ -1,62 +1,52 @@
 package ph.dlsu.edu.lbycpob.service;
 
-import repairapp.model.User;
-import repairapp.util.JsonUtil;
+import com.autoworks.repair.model.User;
+import com.google.gson.reflect.TypeToken;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.HexFormat;
-import java.util.LinkedHashMap;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 /**
- * ABSTRACTION + ENCAPSULATION: hides both the on-disk file format and the
- * password hashing scheme behind the two verbs the UI actually needs:
- * register(...) and authenticate(...). No other class ever touches
- * Users.json or SHA-256 directly.
+ * Handles persistence and lookups for mechanic accounts (Users.json).
  */
 public class UserService {
 
-    private static final String FILE = "Users.json";
+    private static final String FILE_NAME = "Users.json";
+    private static final Type LIST_TYPE = new TypeToken<ArrayList<User>>() {
+    }.getType();
 
-    public User register(String firstName, String lastName, String email, String rawPassword) {
-        if (firstName.isBlank() || lastName.isBlank() || email.isBlank() || rawPassword.isBlank()) {
-            throw new IllegalArgumentException("Please fill out all fields.");
-        }
-        List<Map<String, String>> rows = JsonUtil.readArrayOfObjects(FILE);
-        Map<String, String> row = new LinkedHashMap<>();
-        row.put("FirstName", firstName.trim());
-        row.put("LastName", lastName.trim());
-        row.put("Email", email.trim());
-        row.put("Password", hash(rawPassword));
-        rows.add(row);
-        JsonUtil.writeArrayOfObjects(FILE, rows);
-        return new User(firstName.trim(), lastName.trim(), email.trim(), row.get("Password"));
+    public List<User> loadUsers() {
+        return JsonStore.load(FILE_NAME, LIST_TYPE, new ArrayList<>());
     }
 
-    public Optional<User> authenticate(String fullName, String rawPassword) {
-        List<Map<String, String>> rows = JsonUtil.readArrayOfObjects(FILE);
-        String hashed = hash(rawPassword);
-        for (Map<String, String> row : rows) {
-            String candidateName = row.getOrDefault("FirstName", "") + " " + row.getOrDefault("LastName", "");
-            if (candidateName.equals(fullName) && hashed.equals(row.get("Password"))) {
-                return Optional.of(new User(row.get("FirstName"), row.get("LastName"),
-                        row.get("Email"), row.get("Password")));
+    public void saveUsers(List<User> users) {
+        JsonStore.save(FILE_NAME, users);
+    }
+
+    /** Adds a new user to the file, appending to whatever is already saved. */
+    public void registerUser(User newUser) {
+        List<User> users = loadUsers();
+        users.add(newUser);
+        saveUsers(users);
+    }
+
+    /**
+     * Attempts to authenticate by full name + password, matching the
+     * original AttemptLogin() logic exactly.
+     */
+    public Optional<User> authenticate(String fullName, String password) {
+        if (!JsonStore.exists(FILE_NAME)) {
+            return Optional.empty();
+        }
+        List<User> users = loadUsers();
+        for (User u : users) {
+            String candidateFullName = u.getFirstName() + " " + u.getLastName();
+            if (candidateFullName.equals(fullName) && u.getPassword().equals(password)) {
+                return Optional.of(u);
             }
         }
         return Optional.empty();
-    }
-
-    private String hash(String rawPassword) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] bytes = digest.digest(rawPassword.getBytes(StandardCharsets.UTF_8));
-            return HexFormat.of().formatHex(bytes);
-        } catch (NoSuchAlgorithmException e) {
-            throw new IllegalStateException("SHA-256 is not available on this JVM.", e);
-        }
     }
 }
