@@ -1,4 +1,4 @@
 package ph.dlsu.edu.lbycpob.service;
 
-public class LoginService {
+public class InstructionsService {
 }

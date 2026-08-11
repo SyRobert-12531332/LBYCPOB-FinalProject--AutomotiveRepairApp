@@ -1,4 +1,4 @@
 package ph.dlsu.edu.lbycpob.service;
 
-public class InstructionService {
+public class PartsService {
 }
