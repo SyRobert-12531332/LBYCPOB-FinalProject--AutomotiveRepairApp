@@ -1,45 +1,61 @@
 package ph.dlsu.edu.lbycpob.model;
 
 /**
- * ENCAPSULATION: passwordHash is never exposed as plain text once stored;
- * UserService is the only class allowed to compute or compare hashes.
+ * Represents a registered mechanic/user account.
+ * Mirrors the "FirstName" / "LastName" / "Email" / "Password" dictionary
+ * that the original Python app stored inside Users.json.
  */
 public class User {
 
-    private final String firstName;
-    private final String lastName;
-    private final String email;
-    private final String passwordHash;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
 
-    public User(String firstName, String lastName, String email, String passwordHash) {
+    public User() {
+    }
+
+    public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.passwordHash = passwordHash;
+        this.password = password;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     public String getLastName() {
         return lastName;
     }
 
-    public String getFullName() {
-        return firstName + " " + lastName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    @Override
-    public String toString() {
-        return getFullName() + " <" + email + ">";
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    /** Convenience accessor matching the "First Last" format used for login and display. */
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 }
