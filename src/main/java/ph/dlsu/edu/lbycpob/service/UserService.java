@@ -1,6 +1,6 @@
 package ph.dlsu.edu.lbycpob.service;
 
-import com.autoworks.repair.model.User;
+import ph.dlsu.edu.lbycpob.model.User;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
