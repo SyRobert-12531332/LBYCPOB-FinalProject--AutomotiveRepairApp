@@ -4,7 +4,7 @@ package ph.dlsu.edu.lbycpob;
  * Hello world!
  *
  */
-public class App 
+public class AutomationRepairApp
 {
     public static void main( String[] args )
     {
