@@ -174,3 +174,26 @@ public class LogRepairsScreen {
                 descriptionArea.getText()));
         submitRow.getChildren().add(submitButton);
 
+        rightPanel.getChildren().addAll(
+                metaRow, selectedVehicleLabel,
+                affectedPartLabel, partDropdown,
+                addPartRow,
+                severityLabel, severityDropdown,
+                descriptionLabel, descriptionArea,
+                submitRow
+        );
+
+        content.getChildren().addAll(leftPanel, rightPanel);
+        VBox.setVgrow(content, Priority.ALWAYS);
+        root.getChildren().add(content);
+
+        return root;
+    }
+
+    private Label sectionLabel(String text) {
+        Label label = new Label(text);
+        label.setFont(Font.font("Segoe UI", FontWeight.BOLD, 12));
+        label.setStyle("-fx-text-fill: #0f172a;");
+        return label;
+    }
+}
