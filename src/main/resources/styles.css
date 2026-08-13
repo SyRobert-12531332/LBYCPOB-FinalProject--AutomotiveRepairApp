@@ -1,1 +1,76 @@
-hello
+/*
+ * AutoWorks Automation Repair App stylesheet.
+ * Translates the inline PyQt5 QSS blocks from the original Python app
+ * into reusable JavaFX CSS style classes.
+ */
+
+.root {
+    -fx-background-color: #f1f5f9;
+    -fx-font-family: "Segoe UI";
+}
+
+/* ---------- Cards / frames ---------- */
+.login-card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 16;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 16;
+    -fx-border-width: 1;
+}
+
+/* ---------- Text ---------- */
+.page-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0f172a;
+}
+
+.section-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0f172a;
+}
+
+.field-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #334155;
+}
+
+.subtle-label {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #64748b;
+}
+
+.muted-label {
+    -fx-text-fill: #64748b;
+}
+
+.highlight-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2563eb;
+}
+
+.progress-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #10b981;
+}
+
+/* ---------- Inputs ---------- */
+.text-field, .password-field, .text-area, .combo-box {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #cbd5e1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10 14 10 14;
+    -fx-font-size: 14px;
+}
+
+.text-field:focused, .password-field:focused, .text-area:focused, .combo-box:focused {
+    -fx-border-color: #3b82f6;
+    -fx-border-width: 2;
+    -fx-background-color: #ffffff;
+}
