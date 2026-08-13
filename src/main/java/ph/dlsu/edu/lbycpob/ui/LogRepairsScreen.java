@@ -49,3 +49,43 @@ public class LogRepairsScreen {
         this.view = build();
     }
 
+    public VBox getView() {
+        return view;
+    }
+
+    public void refreshVehicleList(List<Vehicle> vehicles) {
+        vehicleList.setItems(FXCollections.observableArrayList(vehicles));
+        selectedVehicleLabel.setText("No Vehicle Selected");
+        partDropdown.setDisable(true);
+        newPartInput.setDisable(true);
+        addPartButton.setDisable(true);
+        partDropdown.getItems().clear();
+    }
+
+    public void onVehicleSelected(Vehicle vehicle, String mechanicName, List<String> parts) {
+        selectedVehicleLabel.setText(vehicle.getBrand() + " " + vehicle.getModel() + " (" + vehicle.getPlate() + ")");
+        mechanicLabel.setText("Mechanic: " + mechanicName);
+
+        partDropdown.setItems(FXCollections.observableArrayList(parts));
+        if (!parts.isEmpty()) {
+            partDropdown.getSelectionModel().selectFirst();
+        }
+        partDropdown.setDisable(false);
+        newPartInput.setDisable(false);
+        addPartButton.setDisable(false);
+    }
+
+    public void addPartToDropdown(String newPart) {
+        partDropdown.getItems().add(newPart);
+        partDropdown.getSelectionModel().select(newPart);
+    }
+
+    public void clearNewPartInput() {
+        newPartInput.clear();
+    }
+
+    public void clearForm() {
+        descriptionArea.clear();
+        severityDropdown.getSelectionModel().selectFirst();
+    }
+
