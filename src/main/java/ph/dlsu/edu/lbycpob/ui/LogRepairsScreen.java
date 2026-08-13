@@ -1,7 +1,7 @@
-package com.autoworks.repair.ui;
+package ph.dlsu.edu.lbycpob.ui;
 
-import com.autoworks.repair.AutomationRepairApp;
-import com.autoworks.repair.model.Vehicle;
+import ph.dlsu.edu.lbycpob.AutomationRepairApp;
+import ph.dlsu.edu.lbycpob.model.Vehicle;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,7 +20,7 @@ import javafx.scene.text.FontWeight;
 
 import java.util.List;
 
-import static com.autoworks.repair.util.UIUtil.pointer;
+import static ph.dlsu.edu.lbycpob.util.UIUtil.pointer;
 
 /**
  * Log Repairs page: pick a vehicle on the left, fill out the repair
