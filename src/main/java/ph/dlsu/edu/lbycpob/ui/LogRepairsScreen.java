@@ -125,3 +125,52 @@ public class LogRepairsScreen {
 
         leftPanel.getChildren().addAll(listLabel, vehicleList);
 
+        // --- Right panel: repair form ---
+        VBox rightPanel = new VBox(15);
+        rightPanel.setPadding(new Insets(0, 0, 0, 20));
+        HBox.setHgrow(rightPanel, Priority.ALWAYS);
+
+        HBox metaRow = new HBox();
+        mechanicLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 10));
+        mechanicLabel.getStyleClass().add("subtle-label");
+        dateLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 10));
+        dateLabel.getStyleClass().add("subtle-label");
+        javafx.scene.layout.Region spacer = new javafx.scene.layout.Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        metaRow.getChildren().addAll(mechanicLabel, spacer, dateLabel);
+
+        selectedVehicleLabel.getStyleClass().add("highlight-label");
+
+        Label affectedPartLabel = sectionLabel("Affected Part:");
+        partDropdown.setDisable(true);
+        partDropdown.setMaxWidth(Double.MAX_VALUE);
+
+        HBox addPartRow = new HBox(10);
+        newPartInput.setPromptText("Or type a new part here...");
+        newPartInput.setDisable(true);
+        HBox.setHgrow(newPartInput, Priority.ALWAYS);
+        addPartButton.getStyleClass().add("btn-accent");
+        addPartButton.setDisable(true);
+        addPartButton.setOnAction(e -> app.addNewPart(newPartInput.getText().strip()));
+        addPartRow.getChildren().addAll(newPartInput, addPartButton);
+
+        Label severityLabel = sectionLabel("Damage Severity:");
+        severityDropdown.getSelectionModel().selectFirst();
+        severityDropdown.setMaxWidth(Double.MAX_VALUE);
+
+        Label descriptionLabel = sectionLabel("Damage Description:");
+        descriptionArea.setPromptText("Additional Notes");
+        descriptionArea.setPrefHeight(160);
+        VBox.setVgrow(descriptionArea, Priority.ALWAYS);
+
+        HBox submitRow = new HBox();
+        submitRow.setAlignment(Pos.CENTER_RIGHT);
+        Button submitButton = pointer(new Button("Save Repair Log"));
+        submitButton.getStyleClass().add("btn-success");
+        submitButton.setOnAction(e -> app.saveRepairLog(
+                vehicleList.getSelectionModel().getSelectedItem(),
+                partDropdown.getValue(),
+                severityDropdown.getValue(),
+                descriptionArea.getText()));
+        submitRow.getChildren().add(submitButton);
+
