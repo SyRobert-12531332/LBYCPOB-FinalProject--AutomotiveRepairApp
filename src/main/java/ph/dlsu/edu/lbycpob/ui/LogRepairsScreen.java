@@ -89,3 +89,39 @@ public class LogRepairsScreen {
         severityDropdown.getSelectionModel().selectFirst();
     }
 
+    public void updateClockLabel(String text) {
+        dateLabel.setText(text);
+    }
+
+    private VBox build() {
+        VBox root = new VBox();
+        root.setPadding(new Insets(40, 50, 50, 50));
+        root.setStyle("-fx-background-color: #f1f5f9;");
+        root.getChildren().add(new TopNavBar(app, "Log Repairs", true).getRoot());
+
+        HBox content = new HBox(20);
+
+        // --- Left panel: vehicle list ---
+        VBox leftPanel = new VBox(10);
+        Label listLabel = new Label("Select a Vehicle:");
+        listLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 12));
+        listLabel.setStyle("-fx-text-fill: #0f172a;");
+
+        vehicleList.getStyleClass().add("data-list");
+        vehicleList.setPrefWidth(300);
+        vehicleList.setPrefHeight(560);
+        vehicleList.setCellFactory(list -> new ListCell<>() {
+            @Override
+            protected void updateItem(Vehicle vehicle, boolean empty) {
+                super.updateItem(vehicle, empty);
+                setText(empty || vehicle == null ? null : vehicle.toListDisplay());
+            }
+        });
+        vehicleList.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> {
+            if (newV != null) {
+                app.onRepairVehicleSelected(newV);
+            }
+        });
+
+        leftPanel.getChildren().addAll(listLabel, vehicleList);
+
