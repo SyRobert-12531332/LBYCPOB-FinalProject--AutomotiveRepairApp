@@ -1,8 +1,8 @@
-package com.autoworks.repair.ui;
+package ph.dlsu.edu.lbycpob.ui;
 
-import com.autoworks.repair.AutomationRepairApp;
-import com.autoworks.repair.model.RepairJob;
-import com.autoworks.repair.util.UIUtil;
+import ph.dlsu.edu.lbycpob.AutomationRepairApp;
+import ph.dlsu.edu.lbycpob.model.RepairJob;
+import ph.dlsu.edu.lbycpob.util.UIUtil;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -16,7 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import static com.autoworks.repair.util.UIUtil.pointer;
+import static ph.dlsu.edu.lbycpob.util.UIUtil.pointer;
 
 /**
  * Repair instruction / progress page: shows (and allows editing of) the
