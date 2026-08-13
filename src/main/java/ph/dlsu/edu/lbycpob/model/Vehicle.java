@@ -1,4 +1,4 @@
-package com.autoworks.repair.model;
+package ph.dlsu.edu.lbycpob.model;
 
 /**
  * Represents a customer vehicle on record, equivalent to a row in the
