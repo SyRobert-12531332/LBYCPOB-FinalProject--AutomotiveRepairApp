@@ -77,3 +77,46 @@ public class RepairInstructionScreen {
         VBox.setMargin(subtitleLabel, new Insets(4, 0, 15, 0));
         root.getChildren().add(subtitleLabel);
 
+        HBox manualHeader = new HBox();
+        manualHeader.setAlignment(Pos.CENTER_LEFT);
+        Label manualTitle = new Label("Standard Operating Procedure:");
+        manualTitle.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
+        manualTitle.setStyle("-fx-text-fill: #0f172a;");
+        Region manualSpacer = new Region();
+        HBox.setHgrow(manualSpacer, Priority.ALWAYS);
+
+        Button saveManualButton = pointer(new Button("\uD83D\uDCBE Save Updates to Manual"));
+        saveManualButton.getStyleClass().add("btn-accent");
+        saveManualButton.setOnAction(e -> app.saveInstructionsToJson(instructionBox.getText()));
+
+        manualHeader.getChildren().addAll(manualTitle, manualSpacer, saveManualButton);
+        VBox.setMargin(manualHeader, new Insets(0, 0, 10, 0));
+        root.getChildren().add(manualHeader);
+
+        instructionBox.setWrapText(true);
+        VBox.setVgrow(instructionBox, Priority.ALWAYS);
+        root.getChildren().add(instructionBox);
+
+        VBox progressBox = new VBox(8);
+        progressBox.setPadding(new Insets(20, 0, 20, 0));
+        progressLabel.getStyleClass().add("progress-label");
+
+        progressSlider.getStyleClass().add("progress-slider");
+        progressSlider.setMajorTickUnit(10);
+        progressSlider.setShowTickMarks(true);
+        progressSlider.valueProperty().addListener((obs, oldVal, newVal) ->
+                progressLabel.setText("Current Progress: " + newVal.intValue() + "%"));
+
+        progressBox.getChildren().addAll(progressLabel, progressSlider);
+        root.getChildren().add(progressBox);
+
+        Button saveProgressButton = pointer(new Button("Save Progress & Return"));
+        saveProgressButton.getStyleClass().add("btn-success");
+        saveProgressButton.setMaxWidth(Double.MAX_VALUE);
+        saveProgressButton.setStyle("-fx-font-size: 15px; -fx-padding: 14;");
+        saveProgressButton.setOnAction(e -> app.saveRepairProgress((int) progressSlider.getValue()));
+        root.getChildren().add(saveProgressButton);
+
+        return root;
+    }
+}
