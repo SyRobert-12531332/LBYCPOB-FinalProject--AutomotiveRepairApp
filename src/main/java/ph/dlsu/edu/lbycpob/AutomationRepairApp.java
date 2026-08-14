@@ -240,6 +240,47 @@ public class AutomationRepairApp extends Application {
         AlertUtil.showInfo("Success", "Success", "Repair log saved successfully to file!");
     }
 
+    // ------------------------------------------------------------------
+    // Manage Repairs / Instructions
+    // ------------------------------------------------------------------
+
+    public void openManageRepairsQueue() {
+        allRepairsData = repairService.loadRepairsSortedByUrgency();
+        manageRepairsScreen.refresh(allRepairsData);
+        showOnly(manageRepairsScreen.getView());
+    }
+
+    public void openSelectedRepairTask(RepairJob job) {
+        if (job == null) {
+            AlertUtil.showWarning("Error", "Error", "Please select a repair task first.");
+            return;
+        }
+        currentActiveRepair = job;
+        String partName = job.getPart() != null ? job.getPart() : "Unknown Part";
+        String defaultPrompt = "No manual exists for '" + partName + "' yet.\n\n"
+                + "Type the standard operating procedure here and click "
+                + "'\uD83D\uDCBE Save Updates to Manual' to create one.";
+
+        String instructions = partInstructions.getOrDefault(partName, defaultPrompt);
+        if (instructions.isBlank()) {
+            instructions = defaultPrompt;
+        }
+
+        instructionScreen.open(job, instructions);
+        showOnly(instructionScreen.getView());
+    }
+
+    public void saveInstructionsToJson(String updatedManual) {
+        if (currentActiveRepair == null) {
+            return;
+        }
+        String partName = currentActiveRepair.getPart() != null ? currentActiveRepair.getPart() : "Unknown Part";
+        partInstructions.put(partName, updatedManual.strip());
+        instructionsService.saveInstructions(partInstructions);
+        AlertUtil.showInfo("Manual Updated", "Manual Updated",
+                "The standard operating procedure for '" + partName + "' has been permanently updated!");
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
