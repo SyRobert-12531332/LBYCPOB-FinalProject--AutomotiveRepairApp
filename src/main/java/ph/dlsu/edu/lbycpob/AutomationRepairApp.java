@@ -202,6 +202,44 @@ public class AutomationRepairApp extends Application {
         logRepairsScreen.onVehicleSelected(vehicle, currentMechanicName, parts);
     }
 
+    public void addNewPart(String newPart) {
+        if (newPart == null || newPart.isBlank() || currentSelectedVehicleType == null) {
+            return;
+        }
+        List<String> parts = partsDictionary.computeIfAbsent(currentSelectedVehicleType, k -> new java.util.ArrayList<>());
+        if (!parts.contains(newPart)) {
+            if (!(parts instanceof java.util.ArrayList)) {
+                parts = new java.util.ArrayList<>(parts);
+                partsDictionary.put(currentSelectedVehicleType, parts);
+            }
+            parts.add(newPart);
+            partsService.saveParts(partsDictionary);
+            logRepairsScreen.addPartToDropdown(newPart);
+        }
+        logRepairsScreen.clearNewPartInput();
+        AlertUtil.showInfo("Part Added", "Part Added",
+                "'" + newPart + "' has been saved for all " + currentSelectedVehicleType + " vehicles.");
+    }
+
+    public void saveRepairLog(Vehicle vehicle, String part, String severity, String description) {
+        if (vehicle == null) {
+            AlertUtil.showWarning("Error", "Error", "Please select a vehicle first.");
+            return;
+        }
+        RepairJob job = new RepairJob(
+                vehicle.getPlate(),
+                currentMechanicName,
+                LocalDateTime.now().format(TIMESTAMP_FORMAT),
+                part,
+                severity,
+                description.strip(),
+                0
+        );
+        repairService.addRepair(job);
+        logRepairsScreen.clearForm();
+        AlertUtil.showInfo("Success", "Success", "Repair log saved successfully to file!");
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
