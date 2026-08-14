@@ -281,6 +281,36 @@ public class AutomationRepairApp extends Application {
                 "The standard operating procedure for '" + partName + "' has been permanently updated!");
     }
 
+    public void saveRepairProgress(int newProgress) {
+        if (currentActiveRepair == null) {
+            return;
+        }
+        currentActiveRepair.setProgress(newProgress);
+        repairService.saveRepairs(allRepairsData);
+
+        if (newProgress == 100) {
+            AlertUtil.showInfo("Task Complete", "Task Complete", "Great job! This repair is fully completed.");
+        }
+        openManageRepairsQueue();
+    }
+
+    // ------------------------------------------------------------------
+    // Clock
+    // ------------------------------------------------------------------
+
+    private void updateClock() {
+        String now = LocalDateTime.now().format(TIMESTAMP_FORMAT);
+        logRepairsScreen.updateClockLabel("Date: " + now);
+    }
+
+    // ------------------------------------------------------------------
+    // Accessors used by screen classes
+    // ------------------------------------------------------------------
+
+    public String getCurrentMechanicName() {
+        return currentMechanicName;
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
