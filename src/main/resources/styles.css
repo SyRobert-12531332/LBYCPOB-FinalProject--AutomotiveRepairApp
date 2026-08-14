@@ -216,3 +216,31 @@
     -fx-text-fill: #ef4444;
 }
 
+/* ---------- Lists ---------- */
+.data-list {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cbd5e1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-font-size: 14px;
+}
+.data-list .list-cell {
+    -fx-padding: 12;
+    -fx-border-color: transparent transparent #f8fafc transparent;
+}
+.data-list .list-cell:filled:selected {
+    -fx-background-color: #eff6ff;
+    -fx-text-fill: #2563eb;
+    -fx-background-radius: 6;
+}
+
+/* ---------- Slider ---------- */
+.progress-slider .track {
+    -fx-background-color: #e2e8f0;
+    -fx-border-color: #cbd5e1;
+    -fx-background-radius: 5;
+}
+.progress-slider .thumb {
+    -fx-background-color: #10b981;
+    -fx-background-radius: 10;
+}
