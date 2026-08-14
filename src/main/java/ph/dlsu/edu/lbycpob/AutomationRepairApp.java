@@ -149,6 +149,16 @@ public class AutomationRepairApp extends Application {
         openLogin();
     }
 
+    public void openDashboard() {
+        dashboardScreen.refresh(repairService.loadRepairsSortedByUrgency());
+        showOnly(dashboardScreen.getView());
+    }
+
+    public void openManageVehicles() {
+        manageVehiclesScreen.refresh(vehicleService.loadVehicles());
+        showOnly(manageVehiclesScreen.getView());
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
