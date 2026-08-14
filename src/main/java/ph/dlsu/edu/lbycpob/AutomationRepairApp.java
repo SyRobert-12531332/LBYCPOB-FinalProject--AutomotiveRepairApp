@@ -186,6 +186,22 @@ public class AutomationRepairApp extends Application {
         manageVehiclesScreen.refresh(vehicles);
     }
 
+    // ------------------------------------------------------------------
+    // Log Repairs screen support
+    // ------------------------------------------------------------------
+
+    public void openLogRepairs() {
+        logRepairsScreen.refreshVehicleList(vehicleService.loadVehicles());
+        showOnly(logRepairsScreen.getView());
+    }
+
+    public void onRepairVehicleSelected(Vehicle vehicle) {
+        currentSelectedVehicleType = vehicle.getType();
+        List<String> parts = partsDictionary.getOrDefault(
+                vehicle.getType(), List.of("Engine", "Brakes", "Tires", "Other"));
+        logRepairsScreen.onVehicleSelected(vehicle, currentMechanicName, parts);
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
