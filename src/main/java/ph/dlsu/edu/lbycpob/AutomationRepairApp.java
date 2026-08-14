@@ -60,6 +60,45 @@ public class AutomationRepairApp extends Application {
 
     private StackPane screenStack;
 
+    @Override
+    public void start(Stage primaryStage) {
+        partInstructions = instructionsService.loadInstructions();
+        partsDictionary = partsService.loadParts();
+
+        loginScreen = new LoginScreen(this);
+        signupScreen = new SignupScreen(this);
+        dashboardScreen = new DashboardScreen(this);
+        manageVehiclesScreen = new ManageVehiclesScreen(this);
+        logRepairsScreen = new LogRepairsScreen(this);
+        manageRepairsScreen = new ManageRepairsScreen(this);
+        instructionScreen = new RepairInstructionScreen(this);
+
+        screenStack = new StackPane(
+                loginScreen.getView(),
+                signupScreen.getView(),
+                dashboardScreen.getView(),
+                manageVehiclesScreen.getView(),
+                logRepairsScreen.getView(),
+                manageRepairsScreen.getView(),
+                instructionScreen.getView()
+        );
+
+        showOnly(loginScreen.getView());
+
+        Scene scene = new Scene(screenStack, 1200, 750);
+        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+
+        primaryStage.setTitle("Automation Repair App");
+        primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+        primaryStage.show();
+
+        // Live clock, updated every second - mirrors the QTimer(1000ms) in the original app.
+        Timeline clock = new Timeline(new KeyFrame(Duration.seconds(1), event -> updateClock()));
+        clock.setCycleCount(Timeline.INDEFINITE);
+        clock.play();
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
