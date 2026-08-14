@@ -159,6 +159,33 @@ public class AutomationRepairApp extends Application {
         showOnly(manageVehiclesScreen.getView());
     }
 
+    // ------------------------------------------------------------------
+    // Vehicles
+    // ------------------------------------------------------------------
+
+    public void addVehicle(String type, String brand, String model, String plate, String owner, String contact) {
+        if (type == null || type.equals("Select Type") || brand.isBlank() || model.isBlank()
+                || plate.isBlank() || owner.isBlank() || contact.isBlank()) {
+            AlertUtil.showWarning("Missing Information", "Missing Information",
+                    "Fill out all information first before adding.\nAll are required fields.");
+            return;
+        }
+        List<Vehicle> vehicles = vehicleService.loadVehicles();
+        vehicles.add(new Vehicle(type, brand, model, plate, owner, contact));
+        vehicleService.saveVehicles(vehicles);
+        manageVehiclesScreen.refresh(vehicles);
+        manageVehiclesScreen.clearInputs();
+    }
+
+    public void deleteVehicles(List<Vehicle> selected) {
+        List<Vehicle> vehicles = vehicleService.loadVehicles();
+        List<String> platesToDelete = selected.stream().map(Vehicle::getPlate).toList();
+        vehicles.removeIf(v -> platesToDelete.contains(v.getPlate()));
+        vehicleService.saveVehicles(vehicles);
+        repairService.deleteRepairsForPlates(platesToDelete);
+        manageVehiclesScreen.refresh(vehicles);
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
