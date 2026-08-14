@@ -99,8 +99,9 @@ public class AutomationRepairApp extends Application {
         clock.play();
     }
 
-
+    // ------------------------------------------------------------------
     // Navigation
+    // ------------------------------------------------------------------
 
     private void showOnly(javafx.scene.Node node) {
         for (javafx.scene.Node child : screenStack.getChildren()) {
@@ -121,6 +122,31 @@ public class AutomationRepairApp extends Application {
     public void logout() {
         loginScreen.clearFields();
         showOnly(loginScreen.getView());
+    }
+
+    // ------------------------------------------------------------------
+    // Login / Signup
+    // ------------------------------------------------------------------
+
+    public void attemptLogin(String fullName, String password) {
+        Optional<User> match = userService.authenticate(fullName, password);
+        if (match.isPresent()) {
+            currentMechanicName = match.get().getFullName();
+            openDashboard();
+        } else {
+            AlertUtil.showWarning("Log in Failed", "Log in Failed", "Invalid username or password.");
+        }
+    }
+
+    public void registerUser(String firstName, String lastName, String email, String password) {
+        if (firstName.isBlank() || lastName.isBlank() || email.isBlank() || password.isBlank()) {
+            AlertUtil.showWarning("Error", "Error", "Please fill out all fields.");
+            return;
+        }
+        userService.registerUser(new User(firstName, lastName, email, password));
+        AlertUtil.showInfo("Success", "Success", "Account created successfully! You can now log in.");
+        signupScreen.clearFields();
+        openLogin();
     }
 
     public static void main(String[] args) {
