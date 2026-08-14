@@ -172,3 +172,47 @@
     -fx-background-color: #f1f5f9;
 }
 
+/* ---------- Divider ---------- */
+.divider {
+    -fx-background-color: #e2e8f0;
+}
+
+/* ---------- Tables ---------- */
+.data-table {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cbd5e1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-font-size: 14px;
+}
+.data-table .column-header-background {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 8 8 0 0;
+}
+.data-table .column-header, .data-table .filler {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #cbd5e1 transparent;
+    -fx-border-width: 0 0 2 0;
+}
+.data-table .column-header .label {
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-text-fill: #334155;
+    -fx-alignment: CENTER_LEFT;
+}
+.data-table .table-row-cell {
+    -fx-background-color: #ffffff;
+    -fx-table-cell-border-color: #e2e8f0;
+}
+.data-table .table-row-cell:selected {
+    -fx-background-color: #eff6ff;
+    -fx-text-fill: #2563eb;
+}
+.data-table .table-row-cell:selected .table-cell {
+    -fx-text-fill: #2563eb;
+}
+
+.severity-urgent {
+    -fx-text-fill: #ef4444;
+}
+
