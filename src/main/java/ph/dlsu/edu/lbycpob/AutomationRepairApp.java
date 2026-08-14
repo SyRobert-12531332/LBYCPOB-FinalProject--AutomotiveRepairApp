@@ -99,6 +99,30 @@ public class AutomationRepairApp extends Application {
         clock.play();
     }
 
+
+    // Navigation
+
+    private void showOnly(javafx.scene.Node node) {
+        for (javafx.scene.Node child : screenStack.getChildren()) {
+            child.setVisible(child == node);
+            child.setManaged(child == node);
+        }
+    }
+
+    public void openLogin() {
+        loginScreen.clearFields();
+        showOnly(loginScreen.getView());
+    }
+
+    public void openSignup() {
+        showOnly(signupScreen.getView());
+    }
+
+    public void logout() {
+        loginScreen.clearFields();
+        showOnly(loginScreen.getView());
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
