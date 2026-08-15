@@ -1,0 +1,46 @@
+{
+  "Sedan": [
+    "Engine",
+    "Transmission",
+    "Brakes",
+    "Suspension",
+    "Tires",
+    "Battery",
+    "Alternator"
+  ],
+  "SUV": [
+    "Engine",
+    "4WD System",
+    "Brakes",
+    "Suspension",
+    "Tires",
+    "Battery",
+    "Transfer Case"
+  ],
+  "Van": [
+    "Engine",
+    "Sliding Door Track",
+    "Brakes",
+    "Suspension",
+    "Tires",
+    "Battery",
+    "Cooling System"
+  ],
+  "Pickup": [
+    "Engine",
+    "Transmission",
+    "Tailgate",
+    "Suspension",
+    "Tires",
+    "Battery",
+    "Tow Hitch"
+  ],
+  "Motorcycle": [
+    "Engine",
+    "Chain/Sprocket",
+    "Brakes",
+    "Tires",
+    "Battery",
+    "Forks"
+  ]
+}

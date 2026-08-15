@@ -1,8 +1,6 @@
 package ph.dlsu.edu.lbycpob.ui;
 
 import ph.dlsu.edu.lbycpob.AutomationRepairApp;
-import ph.dlsu.edu.lbycpob.model.RepairJob;
-import ph.dlsu.edu.lbycpob.util.UIUtil;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -43,6 +41,7 @@ public class SignupScreen {
         lastNameField.clear();
         passwordField.clear();
     }
+
     private StackPane build() {
         StackPane root = new StackPane();
         root.setPadding(new Insets(20));
@@ -65,7 +64,7 @@ public class SignupScreen {
         signupButton.setOnAction(e -> handleSignup());
 
         Button loginButton = new Button("Back to Login");
-        loginButton.setOnAction(e -> app.showLoginScreen());
+        loginButton.setOnAction(e -> app.openLogin());
 
         HBox buttonBox = new HBox(10, signupButton, loginButton);
         buttonBox.setAlignment(Pos.CENTER);
@@ -89,13 +88,7 @@ public class SignupScreen {
         String lastName = lastNameField.getText().trim();
         String password = passwordField.getText();
 
-        if (email.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || password.isEmpty()) {
-            UIUtil.showAlert("Error", "Please fill in all fields.");
-            return;
-        }
-
-        // Add your registration logic/database call here via app instance
-        clearFields();
-        app.showLoginScreen();
+        // Delegate registration logic directly to app
+        app.registerUser(firstName, lastName, email, password);
     }
 }
