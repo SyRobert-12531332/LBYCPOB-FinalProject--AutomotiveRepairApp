@@ -1,14 +1,12 @@
 package ph.dlsu.edu.lbycpob.ui;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.scene.control.*;
 import ph.dlsu.edu.lbycpob.AutomationRepairApp;
 import ph.dlsu.edu.lbycpob.model.Vehicle;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -120,5 +118,31 @@ public class ManageVehiclesScreen {
         root.getChildren().add(buttonRow);
 
         return root;
+    }
+
+    private void setupTable() {
+        vehicleTable.getStyleClass().add("data-table");
+        vehicleTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        vehicleTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        TableColumn<Vehicle, String> type = new TableColumn<>("Type");
+        type.setCellValueFactory(d -> new ReadOnlyObjectWrapper<>(d.getValue().getType()));
+
+        TableColumn<Vehicle, String> brand = new TableColumn<>("Brand");
+        brand.setCellValueFactory(d -> new ReadOnlyObjectWrapper<>(d.getValue().getBrand()));
+
+        TableColumn<Vehicle, String> model = new TableColumn<>("Model");
+        model.setCellValueFactory(d -> new ReadOnlyObjectWrapper<>(d.getValue().getModel()));
+
+        TableColumn<Vehicle, String> plate = new TableColumn<>("Plate Number");
+        plate.setCellValueFactory(d -> new ReadOnlyObjectWrapper<>(d.getValue().getPlate()));
+
+        TableColumn<Vehicle, String> owner = new TableColumn<>("Owner Name");
+        owner.setCellValueFactory(d -> new ReadOnlyObjectWrapper<>(d.getValue().getOwner()));
+
+        TableColumn<Vehicle, String> contact = new TableColumn<>("Contact Number");
+        contact.setCellValueFactory(d -> new ReadOnlyObjectWrapper<>(d.getValue().getContact()));
+
+        vehicleTable.getColumns().addAll(List.of(type, brand, model, plate, owner, contact));
     }
 }
