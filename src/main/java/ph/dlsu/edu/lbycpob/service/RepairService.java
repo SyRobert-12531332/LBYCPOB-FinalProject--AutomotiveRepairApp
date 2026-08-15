@@ -5,12 +5,12 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
-/**
- * Handles persistence for logged repair jobs (Repairs.json), including the
- * urgency-based sorting used on the Dashboard and Manage Repairs screens.
- */
+// Handles persistence for logged repair jobs (Repairs.json), including the
+// urgency-based sorting used on the Dashboard and Manage Repairs screens.
+
 public class RepairService {
 
     private static final String FILE_NAME = "Repairs.json";
@@ -29,5 +29,27 @@ public class RepairService {
         List<RepairJob> repairs = loadRepairs();
         repairs.add(job);
         saveRepairs(repairs);
+    }
+
+    // Loads repairs and sorts them so Urgent Repair jobs appear first
+    public List<RepairJob> loadRepairsSortedByUrgency() {
+        List<RepairJob> repairs = loadRepairs();
+        repairs.sort(Comparator.comparingInt(r -> RepairJob.urgencyWeight(r.getSeverity())));
+        return repairs;
+    }
+
+    // Removes every repair job whose plate is in the given list, then saves; used after a vehicle delete
+    public void deleteRepairsForPlates(List<String> plates) {
+        if (!JsonStore.exists(FILE_NAME)) {
+            return;
+        }
+        List<RepairJob> repairs = loadRepairs();
+        List<RepairJob> updated = new ArrayList<>();
+        for (RepairJob rep : repairs) {
+            if (!plates.contains(rep.getPlate())) {
+                updated.add(rep);
+            }
+        }
+        saveRepairs(updated);
     }
 }
