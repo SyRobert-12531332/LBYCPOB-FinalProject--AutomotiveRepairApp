@@ -2,6 +2,7 @@ package ph.dlsu.edu.lbycpob.util;
 
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -34,6 +35,15 @@ public final class UIUtil {
     public static <T extends Node> T pointer(T node) {
         node.setCursor(Cursor.HAND);
         return node;
+    }
+
+    // Add this method to resolve UIUtil.showAlert(...)
+    public static void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     /**

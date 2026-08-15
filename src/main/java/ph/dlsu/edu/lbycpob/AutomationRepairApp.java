@@ -124,6 +124,10 @@ public class AutomationRepairApp extends Application {
         showOnly(loginScreen.getView());
     }
 
+    public void showLoginScreen() {
+        openLogin();
+    }
+
     // ------------------------------------------------------------------
     // Login / Signup
     // ------------------------------------------------------------------
