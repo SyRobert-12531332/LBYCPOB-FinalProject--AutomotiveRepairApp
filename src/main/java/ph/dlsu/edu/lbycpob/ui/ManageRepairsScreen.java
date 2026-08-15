@@ -102,4 +102,3 @@ public class ManageRepairsScreen {
         repairsTable.getColumns().addAll(List.of(urgency, plate, part, mechanic, progress));
     }
 }
-}
