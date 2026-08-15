@@ -1,14 +1,13 @@
 package ph.dlsu.edu.lbycpob.ui;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.scene.control.*;
 import ph.dlsu.edu.lbycpob.AutomationRepairApp;
 import ph.dlsu.edu.lbycpob.model.RepairJob;
 import ph.dlsu.edu.lbycpob.util.UIUtil;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -82,5 +81,46 @@ public class DashboardScreen {
         tile.setEffect(UIUtil.createShadow());
         tile.setOnAction(e -> onClick.run());
         return tile;
+    }
+
+    private void setupTable() {
+        repairsTable.getStyleClass().add("data-table");
+        repairsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        TableColumn<RepairJob, String> urgency = new TableColumn<>("Urgency");
+        urgency.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getSeverity()));
+        urgency.setCellFactory(col -> new TableCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    getStyleClass().remove("severity-urgent");
+                } else {
+                    setText(item);
+                    if ("Urgent Repair".equals(item)) {
+                        if (!getStyleClass().contains("severity-urgent")) {
+                            getStyleClass().add("severity-urgent");
+                        }
+                    } else {
+                        getStyleClass().remove("severity-urgent");
+                    }
+                }
+            }
+        });
+
+        TableColumn<RepairJob, String> plate = new TableColumn<>("Vehicle Plate");
+        plate.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getPlate()));
+
+        TableColumn<RepairJob, String> part = new TableColumn<>("Part");
+        part.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getPart()));
+
+        TableColumn<RepairJob, String> mechanic = new TableColumn<>("Mechanic");
+        mechanic.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getMechanic()));
+
+        TableColumn<RepairJob, String> progress = new TableColumn<>("Progress");
+        progress.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getProgress() + "%"));
+
+        repairsTable.getColumns().addAll(List.of(urgency, plate, part, mechanic, progress));
     }
 }
