@@ -50,7 +50,7 @@ public class LoginScreen {
 
         card.getChildren().add(UIUtil.loadLogo(220, 150));
 
-        Label subtitle = new Label("AutoWorks Mechanics' Automation Documentation");
+        Label subtitle = new Label("Automotive Repair App");
         subtitle.getStyleClass().add("muted-label");
         subtitle.setFont(Font.font("Segoe UI", 10));
 
