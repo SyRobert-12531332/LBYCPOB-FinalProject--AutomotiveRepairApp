@@ -1,5 +1,8 @@
 package ph.dlsu.edu.lbycpob.ui;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
 import ph.dlsu.edu.lbycpob.AutomationRepairApp;
 import ph.dlsu.edu.lbycpob.model.RepairJob;
 import ph.dlsu.edu.lbycpob.util.UIUtil;
@@ -57,4 +60,46 @@ public class ManageRepairsScreen {
 
         return root;
     }
+
+    private void setupTable() {
+        repairsTable.getStyleClass().add("data-table");
+        repairsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        TableColumn<RepairJob, String> urgency = new TableColumn<>("Urgency");
+        urgency.setCellValueFactory(d -> new ReadOnlyObjectWrapper<>(d.getValue().getSeverity()));
+        urgency.setCellFactory(col -> new TableCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    getStyleClass().remove("severity-urgent");
+                } else {
+                    setText(item);
+                    if ("Urgent Repair".equals(item)) {
+                        if (!getStyleClass().contains("severity-urgent")) {
+                            getStyleClass().add("severity-urgent");
+                        }
+                    } else {
+                        getStyleClass().remove("severity-urgent");
+                    }
+                }
+            }
+        });
+
+        TableColumn<RepairJob, String> plate = new TableColumn<>("Vehicle Plate");
+        plate.setCellValueFactory(d -> new ReadOnlyObjectWrapper<>(d.getValue().getPlate()));
+
+        TableColumn<RepairJob, String> part = new TableColumn<>("Part");
+        part.setCellValueFactory(d -> new ReadOnlyObjectWrapper<>(d.getValue().getPart()));
+
+        TableColumn<RepairJob, String> mechanic = new TableColumn<>("Mechanic");
+        mechanic.setCellValueFactory(d -> new ReadOnlyObjectWrapper<>(d.getValue().getMechanic()));
+
+        TableColumn<RepairJob, String> progress = new TableColumn<>("Progress");
+        progress.setCellValueFactory(d -> new ReadOnlyObjectWrapper<>(d.getValue().getProgress() + "%"));
+
+        repairsTable.getColumns().addAll(List.of(urgency, plate, part, mechanic, progress));
+    }
+}
 }
