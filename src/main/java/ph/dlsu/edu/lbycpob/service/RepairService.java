@@ -11,29 +11,41 @@ import java.util.List;
 // Handles persistence for logged repair jobs (Repairs.json), including the
 // urgency-based sorting used on the Dashboard and Manage Repairs screens.
 
-public class RepairService {
+public class RepairService implements DataRepository<RepairJob> {
 
     private static final String FILE_NAME = "Repairs.json";
     private static final Type LIST_TYPE = new TypeToken<ArrayList<RepairJob>>() {
     }.getType();
 
-    public List<RepairJob> loadRepairs() {
+    @Override
+    public List<RepairJob> loadAll() {
         return JsonStore.load(FILE_NAME, LIST_TYPE, new ArrayList<>());
     }
 
+    @Override
+    public void saveAll(List<RepairJob> items) {
+        JsonStore.save(FILE_NAME, items);
+    }
+
+    // Kept as thin aliases so existing call sites (AutomationRepairApp, etc.)
+    // don't need to change every loadRepairs()/saveRepairs() call at once.
+    public List<RepairJob> loadRepairs() {
+        return loadAll();
+    }
+
     public void saveRepairs(List<RepairJob> repairs) {
-        JsonStore.save(FILE_NAME, repairs);
+        saveAll(repairs);
     }
 
     public void addRepair(RepairJob job) {
-        List<RepairJob> repairs = loadRepairs();
+        List<RepairJob> repairs = loadAll();
         repairs.add(job);
-        saveRepairs(repairs);
+        saveAll(repairs);
     }
 
     // Loads repairs and sorts them so Urgent Repair jobs appear first
     public List<RepairJob> loadRepairsSortedByUrgency() {
-        List<RepairJob> repairs = loadRepairs();
+        List<RepairJob> repairs = loadAll();
         repairs.sort(Comparator.comparingInt(r -> RepairJob.urgencyWeight(r.getSeverity())));
         return repairs;
     }
@@ -43,13 +55,13 @@ public class RepairService {
         if (!JsonStore.exists(FILE_NAME)) {
             return;
         }
-        List<RepairJob> repairs = loadRepairs();
+        List<RepairJob> repairs = loadAll();
         List<RepairJob> updated = new ArrayList<>();
         for (RepairJob rep : repairs) {
             if (!plates.contains(rep.getPlate())) {
                 updated.add(rep);
             }
         }
-        saveRepairs(updated);
+        saveAll(updated);
     }
 }
