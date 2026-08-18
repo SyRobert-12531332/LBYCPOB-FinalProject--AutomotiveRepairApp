@@ -1,5 +1,6 @@
 package ph.dlsu.edu.lbycpob.ui;
 
+import javafx.scene.text.FontWeight;
 import ph.dlsu.edu.lbycpob.AutomationRepairApp;
 import ph.dlsu.edu.lbycpob.util.UIUtil;
 
@@ -52,7 +53,8 @@ public class LoginScreen {
 
         Label subtitle = new Label("Automotive Repair App");
         subtitle.getStyleClass().add("muted-label");
-        subtitle.setFont(Font.font("Segoe UI", 10));
+        subtitle.setFont(Font.font("Segoe UI", FontWeight.BOLD, 25));
+
 
         Label usernameLabel = new Label("Full Name");
         usernameLabel.getStyleClass().add("field-label");
