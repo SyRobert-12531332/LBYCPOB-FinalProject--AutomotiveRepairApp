@@ -31,6 +31,7 @@ public class RepairInstructionScreen {
 
     private final Label titleLabel = new Label("Repairing: Unknown Part");
     private final Label subtitleLabel = new Label("Vehicle: -- | Urgency: --");
+    private final TextArea descriptionBox = new TextArea();
     private final TextArea instructionBox = new TextArea();
     private final Label progressLabel = new Label("Current Progress: 0%");
     private final Slider progressSlider = new Slider(0, 100, 0);
@@ -44,11 +45,14 @@ public class RepairInstructionScreen {
         return view;
     }
 
-    /** Populates the screen for a newly-opened repair task. */
     public void open(RepairJob job, String instructions) {
         String partName = job.getPart() != null ? job.getPart() : "Unknown Part";
         titleLabel.setText("Repairing: " + partName);
         subtitleLabel.setText("Vehicle: " + nullSafe(job.getPlate()) + " | Urgency: " + nullSafe(job.getSeverity()));
+
+        // Display the logged damage description (Read-Only)
+        descriptionBox.setText(nullSafe(job.getDescription()));
+
         instructionBox.setText(instructions);
         progressSlider.setValue(job.getProgress());
         progressLabel.setText("Current Progress: " + job.getProgress() + "%");

@@ -6,7 +6,9 @@
     "Suspension",
     "Tires",
     "Battery",
-    "Alternator"
+    "Alternator",
+    "Wheel",
+    "Head Gasket"
   ],
   "SUV": [
     "Engine",
