@@ -1,8 +1,14 @@
 [
   {
-    "firstName": "ang",
-    "lastName": "elo",
-    "email": "angelo",
-    "password": "123"
+    "firstName": "Nath",
+    "lastName": "Gabito",
+    "email": "nath_gabito@dlsu.edu.ph",
+    "password": "Hamburger6002"
+  },
+  {
+    "firstName": "Robert",
+    "lastName": "Jagonap",
+    "email": "user_user@dlsu.edu.ph",
+    "password": "hamburger5"
   }
 ]
