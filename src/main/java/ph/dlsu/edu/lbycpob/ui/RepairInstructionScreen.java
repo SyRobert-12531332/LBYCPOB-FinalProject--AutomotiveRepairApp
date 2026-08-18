@@ -35,6 +35,7 @@ public class RepairInstructionScreen {
     private final TextArea instructionBox = new TextArea();
     private final Label progressLabel = new Label("Current Progress: 0%");
     private final Slider progressSlider = new Slider(0, 100, 0);
+    private final Label descriptionLabel = new Label();
 
     public RepairInstructionScreen(AutomationRepairApp app) {
         this.app = app;
@@ -46,12 +47,17 @@ public class RepairInstructionScreen {
     }
 
     public void open(RepairJob job, String instructions) {
-        String partName = job.getPart() != null ? job.getPart() : "Unknown Part";
-        titleLabel.setText("Repairing: " + partName);
-        subtitleLabel.setText("Vehicle: " + nullSafe(job.getPlate()) + " | Urgency: " + nullSafe(job.getSeverity()));
+        if (job != null) {
+            String partName = job.getPart() != null ? job.getPart() : "Unknown Part";
+            titleLabel.setText("Repairing: " + partName);
+            subtitleLabel.setText("Vehicle: " + nullSafe(job.getPlate()) + " | Urgency: " + nullSafe(job.getSeverity()));
 
-        // Display the logged damage description (Read-Only)
-        descriptionBox.setText(nullSafe(job.getDescription()));
+            String desc = job.getDescription();
+            descriptionLabel.setText("Reported Problem: " + (desc != null && !desc.isBlank() ? desc : "No description provided."));
+
+            progressSlider.setValue(job.getProgress());
+            progressLabel.setText("Current Progress: " + job.getProgress() + "%");
+        }
 
         instructionBox.setText(instructions);
         progressSlider.setValue(job.getProgress());
@@ -80,6 +86,10 @@ public class RepairInstructionScreen {
         subtitleLabel.getStyleClass().add("muted-label");
         VBox.setMargin(subtitleLabel, new Insets(4, 0, 15, 0));
         root.getChildren().add(subtitleLabel);
+
+        descriptionLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #333333; -fx-padding: 0 0 10 0;");
+        descriptionLabel.setWrapText(true);
+        root.getChildren().add(descriptionLabel);
 
         HBox manualHeader = new HBox();
         manualHeader.setAlignment(Pos.CENTER_LEFT);

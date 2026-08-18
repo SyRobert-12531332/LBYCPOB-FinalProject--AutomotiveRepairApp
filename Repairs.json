@@ -7,5 +7,14 @@
     "severity": "Minor Damage",
     "description": "For replacement",
     "progress": 0
+  },
+  {
+    "plate": "ABC 1234",
+    "mechanic": "Angelo Jagonap",
+    "timestamp": "2026-08-18 22:08:31",
+    "part": "Transmission",
+    "severity": "Minor Damage",
+    "description": "Test",
+    "progress": 0
   }
 ]
