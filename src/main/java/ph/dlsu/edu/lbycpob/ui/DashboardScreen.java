@@ -20,10 +20,11 @@ import java.util.List;
 // Main menu/dashboard
 public class DashboardScreen extends AppScreen {
 
-    private TableView<RepairJob> repairsTable;
+    private final TableView<RepairJob> repairsTable = new TableView<>();
 
     public DashboardScreen(AutomationRepairApp app) {
         super(app, "Dashboard", false);
+        init(); // Builds screen content after repairsTable is initialized
     }
 
     public void refresh(List<RepairJob> repairs) {
@@ -73,7 +74,7 @@ public class DashboardScreen extends AppScreen {
 
     private void setupTable() {
         repairsTable.getStyleClass().add("data-table");
-        repairsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        repairsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
 
         TableColumn<RepairJob, String> urgency = new TableColumn<>("Urgency");
         urgency.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getSeverity()));
