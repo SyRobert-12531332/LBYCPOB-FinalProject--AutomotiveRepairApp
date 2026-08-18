@@ -26,8 +26,7 @@ public abstract class AppScreen {
         root.setPadding(new Insets(40, 50, 50, 50));
         root.setStyle("-fx-background-color: #f1f5f9;");
         root.getChildren().add(new TopNavBar(app, title, showBackButton).getRoot());
-
-        buildContent(root);
+        // DO NOT call buildContent(root) here
     }
 
     /**
@@ -35,6 +34,10 @@ public abstract class AppScreen {
      * added to {@code root}. Implementations add their own screen-specific
      * controls (tables, forms, tiles, etc.) to {@code root}.
      */
+    public void init() {
+        buildContent(root);
+    }
+
     protected abstract void buildContent(VBox root);
 
     public VBox getView() {
