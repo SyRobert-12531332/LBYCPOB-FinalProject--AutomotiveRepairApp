@@ -1,0 +1,26 @@
+[
+  {
+    "type": "Sedan",
+    "brand": "Honda",
+    "model": "Civic",
+    "plate": "ADW 1938",
+    "owner": "Angelo Jagonap",
+    "contact": "0915 123 4567"
+  },
+  {
+    "type": "SUV",
+    "brand": "Toyota",
+    "model": "Fortuner",
+    "plate": "NCG 8432",
+    "owner": "Nath Sy",
+    "contact": "0917 912 2834"
+  },
+  {
+    "type": "Van",
+    "brand": "Toyota",
+    "model": "Hiace",
+    "plate": "CAW 7653",
+    "owner": "Rovi Gabito",
+    "contact": "0917 8327 823"
+  }
+]

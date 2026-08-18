@@ -1,0 +1,38 @@
+[
+  {
+    "plate": "NCG 8432",
+    "mechanic": "ang elo",
+    "timestamp": "2026-08-17 22:00:03",
+    "part": "4WD System",
+    "severity": "Urgent Repair",
+    "description": "Differential is leaking oil; must be replaced",
+    "progress": 0
+  },
+  {
+    "plate": "ADW 1938",
+    "mechanic": "ang elo",
+    "timestamp": "2026-08-17 21:55:06",
+    "part": "Engine",
+    "severity": "Needs Repair",
+    "description": "Blown head gasket; must be replaced",
+    "progress": 33
+  },
+  {
+    "plate": "NCG 8432",
+    "mechanic": "ang elo",
+    "timestamp": "2026-08-17 22:06:57",
+    "part": "Tires",
+    "severity": "Needs Repair",
+    "description": "Front left tire for replacement",
+    "progress": 88
+  },
+  {
+    "plate": "CAW 7653",
+    "mechanic": "ang elo",
+    "timestamp": "2026-08-17 22:00:43",
+    "part": "Tires",
+    "severity": "Minor Damage",
+    "description": "Front left wheel is out of balance",
+    "progress": 0
+  }
+]
