@@ -1,49 +1,39 @@
 package ph.dlsu.edu.lbycpob.ui;
 
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.scene.control.*;
-import ph.dlsu.edu.lbycpob.AutomationRepairApp;
-import ph.dlsu.edu.lbycpob.model.RepairJob;
-import ph.dlsu.edu.lbycpob.util.UIUtil;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import ph.dlsu.edu.lbycpob.AutomationRepairApp;
+import ph.dlsu.edu.lbycpob.model.RepairJob;
+import ph.dlsu.edu.lbycpob.util.UIUtil;
 
 import java.util.List;
 
-
 // Main menu/dashboard
 
-public class DashboardScreen {
+public class DashboardScreen extends AppScreen {
 
-    private final VBox view;
     private final TableView<RepairJob> repairsTable = new TableView<>();
 
     public DashboardScreen(AutomationRepairApp app) {
-        this.view = build(app);
-    }
-
-    public VBox getView() {
-        return view;
+        super(app, "Dashboard", false);
     }
 
     public void refresh(List<RepairJob> repairs) {
         repairsTable.setItems(FXCollections.observableArrayList(repairs));
     }
 
-    private VBox build(AutomationRepairApp app) {
-        VBox root = new VBox();
-        root.setPadding(new Insets(40, 50, 50, 50));
-        root.setStyle("-fx-background-color: #f1f5f9;");
-
-        root.getChildren().add(new TopNavBar(app, "Dashboard", false).getRoot());
-
+    @Override
+    protected void buildContent(VBox root) {
         HBox tiles = new HBox(30);
         tiles.setAlignment(Pos.CENTER);
         tiles.setPadding(new Insets(0, 0, 30, 0));
@@ -71,8 +61,6 @@ public class DashboardScreen {
         repairsTable.setEffect(UIUtil.createShadow());
         VBox.setVgrow(repairsTable, Priority.ALWAYS);
         root.getChildren().add(repairsTable);
-
-        return root;
     }
 
     private Button makeTile(String emoji, String label, Runnable onClick) {
@@ -81,46 +69,5 @@ public class DashboardScreen {
         tile.setEffect(UIUtil.createShadow());
         tile.setOnAction(e -> onClick.run());
         return tile;
-    }
-
-    private void setupTable() {
-        repairsTable.getStyleClass().add("data-table");
-        repairsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
-        TableColumn<RepairJob, String> urgency = new TableColumn<>("Urgency");
-        urgency.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getSeverity()));
-        urgency.setCellFactory(col -> new TableCell<>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                    getStyleClass().remove("severity-urgent");
-                } else {
-                    setText(item);
-                    if ("Urgent Repair".equals(item)) {
-                        if (!getStyleClass().contains("severity-urgent")) {
-                            getStyleClass().add("severity-urgent");
-                        }
-                    } else {
-                        getStyleClass().remove("severity-urgent");
-                    }
-                }
-            }
-        });
-
-        TableColumn<RepairJob, String> plate = new TableColumn<>("Vehicle Plate");
-        plate.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getPlate()));
-
-        TableColumn<RepairJob, String> part = new TableColumn<>("Part");
-        part.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getPart()));
-
-        TableColumn<RepairJob, String> mechanic = new TableColumn<>("Mechanic");
-        mechanic.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getMechanic()));
-
-        TableColumn<RepairJob, String> progress = new TableColumn<>("Progress");
-        progress.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getProgress() + "%"));
-
-        repairsTable.getColumns().addAll(List.of(urgency, plate, part, mechanic, progress));
     }
 }
