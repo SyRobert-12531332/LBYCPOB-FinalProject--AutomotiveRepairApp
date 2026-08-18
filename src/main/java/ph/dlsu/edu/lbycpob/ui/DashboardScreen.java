@@ -17,20 +17,19 @@ import ph.dlsu.edu.lbycpob.util.UIUtil;
 
 import java.util.List;
 
-import static com.sun.javafx.css.StyleClassSet.getStyleClass;
-
 // Main menu/dashboard
-
 public class DashboardScreen extends AppScreen {
 
-    private final TableView<RepairJob> repairsTable = new TableView<>();
+    private TableView<RepairJob> repairsTable;
 
     public DashboardScreen(AutomationRepairApp app) {
         super(app, "Dashboard", false);
     }
 
     public void refresh(List<RepairJob> repairs) {
-        repairsTable.setItems(FXCollections.observableArrayList(repairs));
+        if (repairsTable != null && repairs != null) {
+            repairsTable.setItems(FXCollections.observableArrayList(repairs));
+        }
     }
 
     @Override
